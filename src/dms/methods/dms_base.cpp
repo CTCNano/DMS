@@ -4,6 +4,8 @@
 #include <cstdio>
 #include <cstdlib>
 
+#define LARGE_NUMBER 1000
+
 int DmsBase::getNumSS() {
         return numSS;
 }
@@ -19,16 +21,16 @@ PetscErrorCode readRef(char* fname, DmsBase& Dbase) {
         	fp = fopen (fname, "r");
         	double coords[Dbase.Microscopic->Get_Dim()];
 
-        	char buffer[1000];
-        	fgets(buffer, 1000, fp);
-        	fgets(buffer, 1000, fp);
+        	char buffer[LARGE_NUMBER];
+        	fgets(buffer, LARGE_NUMBER, fp);
+        	fgets(buffer, LARGE_NUMBER, fp);
 
         	std::string numAtomsStr = buffer;
         	std::string::size_type sz;
        	 	int numAtoms = std::stoi (numAtomsStr, &sz);
 
         	int resNum, atomNum;
-        	char resID[1000], atomID[1000];
+        	char resID[LARGE_NUMBER], atomID[LARGE_NUMBER];
 
         	for(int i = 0; i < numAtoms; i++) {
 
