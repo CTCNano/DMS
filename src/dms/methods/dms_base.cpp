@@ -302,12 +302,12 @@ int DmsBase::cgStep(gmx_int64_t gromacStep) {
 	if(!mpiRank) {
 
 		fpLog << getTime() << ":INFO:Taking CG time step " << timeStep << std::endl;
-		timeStep++;
+		timeStep++; // !!!cg step number, not total simulation step number
 		CHKERRQ(ierr);
 
 
 		// Pade: save CG state at t = - Delta
-		/*
+		
 		for(int dim = 0; dim < Mesoscopic->Get_Dim(); dim++) {
 
 			ierr = VecCopy(Mesoscopic->Get_Coords()[dim], Mesoscopic->getCGTensor()[0][dim]);
@@ -317,7 +317,7 @@ int DmsBase::cgStep(gmx_int64_t gromacStep) {
                         	CHKERRQ(ierr);
                 	}
 		}
-		*/
+		
 
 		// Coarse-grain before MD phase (initial CGs) should have already been called during halfMD stage
 
@@ -336,7 +336,7 @@ int DmsBase::cgStep(gmx_int64_t gromacStep) {
 
                         	ierr = VecCopy(Mesoscopic->Get_Coords()[dim], Mesoscopic->Get_RefCoords()[dim]);
                         	CHKERRQ(ierr);		
-                	}
+                	} // !!!The first cg state is used as the reference state which will be updated
 
 		// save current coords to be potentially used for fine-graining
 		for(int dim = 0; dim < Microscopic->Get_Dim(); dim++) {
@@ -368,7 +368,7 @@ int DmsBase::cgStep(gmx_int64_t gromacStep) {
                 CHKERRQ(ierr);
 
 		// Pade: save CG state at t = -	Delta + delta
-		/*
+		
                 for(int dim = 0; dim < Mesoscopic->Get_Dim(); dim++) {
 
                         ierr = VecCopy(Mesoscopic->Get_Coords()[dim], Mesoscopic->getCGTensor()[1][dim]);
@@ -378,7 +378,7 @@ int DmsBase::cgStep(gmx_int64_t gromacStep) {
                                 CHKERRQ(ierr);
                        	}
                 }
-		*/
+		
 
 		for(int dim = 0; dim < Mesoscopic->Get_Dim(); dim++) {
 			ierr = VecCopy(Mesoscopic->Get_Coords()[dim], Mesoscopic->Get_pCoords()[dim]);
@@ -426,7 +426,7 @@ int DmsBase::cgStep(gmx_int64_t gromacStep) {
 		}
 
                 // Pade: save CG state at t = 0
-		/*
+		
                 for(int dim = 0; dim < Mesoscopic->Get_Dim(); dim++) {
 
                         ierr = VecCopy(Mesoscopic->Get_Coords()[dim], Mesoscopic->getCGTensor()[2][dim]);
@@ -436,7 +436,7 @@ int DmsBase::cgStep(gmx_int64_t gromacStep) {
                                 CHKERRQ(ierr);
                         }
                 }
-		*/
+		
 
 		fpLog << getTime() << ":INFO:Syncing GROMACS with DMS" << std::endl;
 		// Done with DMS computations! Now update the GROMACS t_state to re-initiate the MD phase
