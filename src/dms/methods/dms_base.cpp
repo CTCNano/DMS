@@ -293,6 +293,7 @@ int DmsBase::cgStep(gmx_int64_t gromacStep) {
 	 * CoarseGraing -> dimensionality reduction
 	 * Integrate    -> advance the CG state in time
 	 * FineGraining -> recover the atomistic state
+	 * Comments with '!!!' are used for adding new integrator. Remember to delete them.
 	 */
 
 	PetscFunctionBegin;
