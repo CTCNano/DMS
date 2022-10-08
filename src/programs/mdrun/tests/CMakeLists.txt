@@ -53,6 +53,7 @@ gmx_build_unit_test(
     $<TARGET_OBJECTS:swm_objlib>
     $<TARGET_OBJECTS:dms_int_objlib>
     $<TARGET_OBJECTS:dms_euler_objlib>
+    $<TARGET_OBJECTS:dms_pade_objlib>
     $<TARGET_OBJECTS:meth_objlib>
     )
 
